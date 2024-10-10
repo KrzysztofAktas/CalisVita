@@ -5,31 +5,26 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CalisVita.Model
 {
-    public class User : IdentityUser
+    public class Workout
     {
         
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(50)]
-        public string FirstName { get; set; }
+        [MaxLength(100)]
+        public string WorkoutName { get; set; }
+
+        [MaxLength(500)]
+        public string WorkoutInfo { get; set; }
 
         [Required]
         [MaxLength(50)]
-        public string LastName { get; set; }
-
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-
-        [Required]
-        [MinLength(6)]
-        public string Password { get; set; }
+        public string WorkoutType { get; set; }
 
         [Required]
         public int WorkoutLevel { get; set; }
 
         public List<UserWorkoutLog> UserWorkoutLogs { get; set; }
     }
-}
 
+}
