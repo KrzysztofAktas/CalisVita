@@ -10,18 +10,13 @@ namespace CalisVita.Model
        
        public int Id { get; set; }
 
-
-
        [Required]
        public DateTime LogDate { get; set; }
 
        public int Reps { get; set; }
 
-
-
        public User User { get; set; }
 
-      
        public Workout Workout { get; set; }
         
     }
