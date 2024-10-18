@@ -9,7 +9,7 @@ namespace CalisVita.Context
 
         public WorkoutProvider(DatabaseContext context) {  _context = context; }
 
-        public async Task<List<Workout>> GetWorkoutsAsync()
+        public async Task<List<Workout>> GetAllWorkoutsAsync()
         {
             return await _context.Workouts.OrderBy(workout => workout.WorkoutName).ToListAsync();
         }
