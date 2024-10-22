@@ -3,15 +3,28 @@
 @using CalisVita.Model
 
 @inject WorkoutProvider WorkoutProdvider
-@page "/"
+@page "/library"
 
 
 
-<PageTitle>Home</PageTitle>
-
-<h1>Hello, world! :)</h1>
+<PageTitle>Library</PageTitle>
 
 
+@foreach (var workout in workouts)
+{
+    <div class="col">
+        <ExercsieItem Workout="workout"></ExercsieItem>
+    </div>
+}
+
+@if (workouts is null)
+{
+    <p>Loading...</p>
+}
+else if (!workouts.Any())
+{
+    <p>No cheeses found</p>
+}
 
 
 
