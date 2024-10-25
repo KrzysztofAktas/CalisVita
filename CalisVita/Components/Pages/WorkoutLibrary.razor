@@ -1,30 +1,17 @@
 ﻿@using CalisVita.Components.Shared
 @using CalisVita.Context
 @using CalisVita.Model
-
+﻿@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject DatabaseContext DbContext
 @inject WorkoutProvider WorkoutProdvider
+@inject ProtectedSessionStorage ProtectedSessionStore
+@inject NavigationManager NavigationManager
 @page "/library"
 
 
 
+
 <PageTitle>Library</PageTitle>
-
-
-@foreach (var workout in workouts)
-{
-    <div class="col">
-        <ExercsieItem Workout="workout"></ExercsieItem>
-    </div>
-}
-
-@if (workouts is null)
-{
-    <p>Loading...</p>
-}
-else if (!workouts.Any())
-{
-    <p>No cheeses found</p>
-}
 
 
 
@@ -32,8 +19,16 @@ else if (!workouts.Any())
 {
     private IEnumerable<Workout> workouts;
 
+    [Parameter]
+    public Workout Workout { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         workouts = await WorkoutProdvider.GetAllWorkoutsAsync();
+    }
+
+    private void ShowInfo(Workout workout)
+    {
+        NavigationManager.NavigateTo($"/WorkoutPath{workout.WorkoutType}");
     }
 }

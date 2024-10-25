@@ -15,6 +15,7 @@
                 <h5 class="card-title">@Workout.WorkoutName</h5>
             </div>
             <p class="card-text">@Workout.WorkoutInfo</p>
+            
         </div>
     </div>
  </div>
@@ -38,5 +39,6 @@
         Workouts = (await WorkoutProvider.GetAllWorkoutsAsync()).AsQueryable();
     }
 
+   
 
 }
