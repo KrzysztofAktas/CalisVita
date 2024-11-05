@@ -6,13 +6,17 @@
 @inject WorkoutProvider WorkoutProvider
 
 
-<h3>ExercsieItem</h3>
+
 
 <div class="row row-cols-1 row-cols-md-3 g-4">
   <div class="col">
-    <div class="card">
-            <h5 class="card-title">@Workout.WorkoutName</h5>
-            <a href="#" class="btn btn-primary">Progression Path</a>
+    <div class="card h-100  border-dark mb-3" style="max-width: 30rem;">
+        <div class="card text-bg-light  h-100">
+                <div class="d-flex flex-column flex-sm-row justify-content-between">
+            <h5 class="card-title">@Workout.WorkoutType</h5>
+            </div>
+                <button class="btn btn-primary" @onclick="() => ShowInfo(Workout.WorkoutType)">Info</button>
+        </div>
     </div>
   </div>
 </div>
@@ -36,6 +40,10 @@
         Workouts = (await WorkoutProvider.GetAllWorkoutsAsync()).AsQueryable();
     }
 
+    private void ShowInfo(string workoutType)
+    {
+        NavigationManager.NavigateTo($"/WorkoutPath/{workoutType}");
+    }
 
 
    

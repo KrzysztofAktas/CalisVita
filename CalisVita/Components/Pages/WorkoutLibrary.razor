@@ -15,13 +15,29 @@
 <h3>Workout Library</h3>
 
 
-<ExercsieItem></ExercsieItem>
+@foreach (var workout in workouts)
+{
+    <div class="col">
+        <ExercsieItem Workout="workout"></ExercsieItem>
+    </div>
+}
 
+@if (workouts is null)
+{
+    <p>Loading...</p>
+}
+else if (!workouts.Any())
+{
+    <p>No cheeses found</p>
+}
 
 @code {
+    private IEnumerable<Workout> workouts;
     
-    
-
+    protected override async Task OnInitializedAsync()
+    {
+        workouts = await WorkoutProvider.GetAllWorkoutsAsync(); 
+    }
     
 
     

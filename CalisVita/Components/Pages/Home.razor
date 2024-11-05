@@ -1,8 +1,9 @@
 ﻿@using CalisVita.Components.Shared
 @using CalisVita.Context
 @using CalisVita.Model
-
-@inject WorkoutProvider WorkoutProdvider
+@inject DatabaseContext DbContext
+@inject NavigationManager NavigationManager
+@inject WorkoutProvider WorkoutProvider
 @page "/"
 
 
@@ -21,6 +22,10 @@
 
     protected override async Task OnInitializedAsync()
     {
-        workouts = await WorkoutProdvider.GetAllWorkoutsAsync();
+        workouts = await WorkoutProvider.GetAllWorkoutsAsync();
     }
+
+    
+
+
 }

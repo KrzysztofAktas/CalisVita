@@ -1,26 +1,15 @@
 ﻿@using CalisVita.Components.Shared
 @using CalisVita.Context
 @using CalisVita.Model
-@page "/WorkoutPath"
-
 @inject WorkoutProvider WorkoutProdvider
 
+@page "/WorkoutPath/{workout.WorkoutType}"
 
-@foreach (var workout in workouts)
-{
-    <div class="col">
-        <ExercsieItem Workout="workout"></ExercsieItem>
-    </div>
-}
 
-@if (workouts is null)
-{
-    <p>Loading...</p>
-}
-else if (!workouts.Any())
-{
-    <p>No cheeses found</p>
-}
+<div>
+    <h3>Hellp</h3>
+</div>
+
 
 
 
