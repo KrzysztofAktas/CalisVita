@@ -3,32 +3,102 @@
 @using CalisVita.Model
 ﻿@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @inject DatabaseContext DbContext
-@inject WorkoutProvider WorkoutProdvider
+@inject WorkoutProvider WorkoutProvider
 @inject ProtectedSessionStorage ProtectedSessionStore
 @inject NavigationManager NavigationManager
 @page "/library"
 
 
 
-
 <PageTitle>Library</PageTitle>
 
+<h3>Workout Library</h3>
 
-
-@code
+@if (selectedWorkoutType == null)
 {
-    private IEnumerable<Workout> workouts;
+    <!-- Display Workout Types as Cards -->
+    <div class="row">
+        @foreach (var type in workoutTypes)
+        {
+            <div class="col-4">
+                <div class="card text-center" style="cursor: pointer;" @onclick="() => SelectWorkoutType(type)">
+                    <div class="card-body">
+                        <h5 class="card-title">@type</h5>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else if (selectedWorkout == null)
+{
+    <!-- Display Workouts of Selected Type -->
+    <button @onclick="ClearSelection">Back to Types</button>
+    <h3>@selectedWorkoutType Workouts</h3>
+    <div class="row">
+        @foreach (var workout in filteredWorkouts)
+        {
+            <div class="col-4">
+                <div class="card text-center" style="cursor: pointer;" @onclick="() => SelectWorkout(workout)">
+                    <div class="card-body">
+                        <h5 class="card-title">@workout.WorkoutName</h5>
+                        <p class="card-text">@workout.WorkoutInfo</p>
+                        <p class="card-text">Level: @workout.WorkoutLevel</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <!-- Display Selected Workout Details -->
+    <button @onclick="ClearWorkoutSelection">Back to Workouts</button>
+    <div class="workout-details">
+        <h3>@selectedWorkout.WorkoutName</h3>
+        <p>@selectedWorkout.WorkoutInfo</p>
+        <p>Workout Level: @selectedWorkout.WorkoutLevel</p>
+    </div>
+}
 
-    [Parameter]
-    public Workout Workout { get; set; }
+@code {
+    private IEnumerable<Workout> allWorkouts;
+    private IEnumerable<Workout> filteredWorkouts;
+    private List<string> workoutTypes = new List<string>();
+
+    private string selectedWorkoutType;
+    private Workout selectedWorkout;
 
     protected override async Task OnInitializedAsync()
     {
-        workouts = await WorkoutProdvider.GetAllWorkoutsAsync();
+        // Load all workouts from the provider and identify unique workout types
+        allWorkouts = await WorkoutProvider.GetAllWorkoutsAsync();
+        workoutTypes = allWorkouts.Select(w => w.WorkoutType).Distinct().ToList();
     }
 
-    private void ShowInfo(Workout workout)
+    private void SelectWorkoutType(string type)
     {
-        NavigationManager.NavigateTo($"/WorkoutPath{workout.WorkoutType}");
+        // Set the selected workout type and filter workouts to show only those of this type
+        selectedWorkoutType = type;
+        filteredWorkouts = allWorkouts.Where(w => w.WorkoutType == type);
+    }
+
+    private void ClearSelection()
+    {
+        // Clear the selected type to return to the types view
+        selectedWorkoutType = null;
+        filteredWorkouts = null;
+    }
+
+    private void SelectWorkout(Workout workout)
+    {
+        // Set the selected workout to show its details
+        selectedWorkout = workout;
+    }
+
+    private void ClearWorkoutSelection()
+    {
+        // Clear the selected workout to return to the filtered workout view
+        selectedWorkout = null;
     }
 }
