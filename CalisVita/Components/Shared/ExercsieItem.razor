@@ -8,17 +8,14 @@
 
 <h3>ExercsieItem</h3>
 
-<div class="col">
-    <div class="card h-100  border-dark mb-3" style="max-width: 30rem;">
-        <div class="card text-bg-light  h-100">
-            <div class="d-flex flex-column flex-sm-row justify-content-between">
-                <h5 class="card-title">@Workout.WorkoutName</h5>
-            </div>
-            <p class="card-text">@Workout.WorkoutInfo</p>
-            
-        </div>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="col">
+    <div class="card">
+            <h5 class="card-title">@Workout.WorkoutName</h5>
+            <a href="#" class="btn btn-primary">Progression Path</a>
     </div>
- </div>
+  </div>
+</div>
 
 @code {
 
@@ -38,6 +35,8 @@
     {
         Workouts = (await WorkoutProvider.GetAllWorkoutsAsync()).AsQueryable();
     }
+
+
 
    
 
