@@ -31,5 +31,14 @@ namespace CalisVita.Context
             await _context.SaveChangesAsync();
         }
 
+        public async Task<List<Workout>> GetUniqueWorkoutTypesAsync()
+        {
+            return await _context.Workouts
+                .GroupBy(workout => workout.WorkoutType)
+                .Select(g => g.First())
+                .OrderBy(workout => workout.WorkoutName)
+                .ToListAsync();
+        }
+
     }
 }

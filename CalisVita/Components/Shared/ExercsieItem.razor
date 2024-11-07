@@ -7,18 +7,25 @@
 
 
 
-
 <div class="row row-cols-1 row-cols-md-3 g-4">
-  <div class="col">
-    <div class="card h-100  border-dark mb-3" style="max-width: 30rem;">
-        <div class="card text-bg-light  h-100">
-                <div class="d-flex flex-column flex-sm-row justify-content-between">
-            <h5 class="card-title">@Workout.WorkoutType</h5>
+    @if (UniqueWorkouts != null)
+    {
+        @foreach (var workout in UniqueWorkouts)
+        {
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm mb-4" style="max-width: 28rem; border-radius: 10px;">
+                <div class="card text-bg-light h-100 p-3" style="border-radius: 10px;">
+                    <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between mb-3">
+                        <h5 class="card-title fw-bold text-primary">@Workout.WorkoutType</h5>
+                        <button class="btn btn-outline-primary btn-sm mt-2 mt-sm-0" @onclick="() => ShowInfo(Workout.WorkoutType)">
+                            Info
+                        </button>
+                    </div>
+                </div>
             </div>
-                <button class="btn btn-primary" @onclick="() => ShowInfo(Workout.WorkoutType)">Info</button>
         </div>
-    </div>
-  </div>
+        }
+   }
 </div>
 
 @code {
@@ -28,11 +35,14 @@
     [Parameter]
     public Workout Workout { get; set; }
 
+    private List<Workout> UniqueWorkouts;
 
 
     protected override async Task OnInitializedAsync()
     {
+        UniqueWorkouts = await WorkoutProvider.GetUniqueWorkoutTypesAsync();
         await GetWorkouts();
+
     }
 
     private async Task GetWorkouts()
