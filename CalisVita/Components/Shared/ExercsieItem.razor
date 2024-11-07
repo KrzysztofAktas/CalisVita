@@ -10,7 +10,7 @@
 <div class="row row-cols-1 row-cols-md-3 g-4">
     @if (UniqueWorkouts != null)
     {
-        @foreach (var workout in UniqueWorkouts)
+        @foreach (var Workout in UniqueWorkouts)
         {
         <div class="col">
             <div class="card h-100 border-0 shadow-sm mb-4" style="max-width: 28rem; border-radius: 10px;">
@@ -30,25 +30,26 @@
 
 @code {
 
-    public IQueryable<Workout>? Workouts { get; set; }
+    private List<Workout> Workouts = new List<Workout>
+    {
+        new Workout { WorkoutType = "Chest" },
+        new Workout { WorkoutType = "Legs" },
+        new Workout { WorkoutType = "Core" },
+        new Workout { WorkoutType = "Back" },
+        new Workout { WorkoutType = "Shoulders" },
+        
+    };
 
     [Parameter]
     public Workout Workout { get; set; }
 
-    private List<Workout> UniqueWorkouts;
 
 
-    protected override async Task OnInitializedAsync()
-    {
-        UniqueWorkouts = await WorkoutProvider.GetUniqueWorkoutTypesAsync();
-        await GetWorkouts();
+    private IEnumerable<Workout> UniqueWorkouts => Workouts
+        .GroupBy(w => w.WorkoutType)
+        .Select(g => g.First());
 
-    }
-
-    private async Task GetWorkouts()
-    {
-        Workouts = (await WorkoutProvider.GetAllWorkoutsAsync()).AsQueryable();
-    }
+   
 
     private void ShowInfo(string workoutType)
     {
