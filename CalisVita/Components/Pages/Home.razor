@@ -4,13 +4,12 @@
 @inject DatabaseContext DbContext
 @inject NavigationManager NavigationManager
 @inject WorkoutProvider WorkoutProvider
+
 @page "/"
 
 
 
 <PageTitle>Home</PageTitle>
-
-<h1>Hello, world! :)</h1>
 
 
 
@@ -25,7 +24,66 @@
         workouts = await WorkoutProvider.GetAllWorkoutsAsync();
     }
 
-    
+    // Get the current day of the week (0 = Sunday, 6 = Saturday)
+    string[] daysOfWeek = new[] {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+    int currentDayIndex = (int)DateTime.Now.DayOfWeek;
 
 
 }
+<div class="calendar-container">
+    <div class="calendar">
+        @for (int i = 0; i < daysOfWeek.Length; i++)
+        {
+            <div class="day @(i == currentDayIndex ? "highlight" : "")">
+                @daysOfWeek[i]
+            </div>
+        }
+    </div>
+
+    <div class="counters">
+        <div class="streak-counter">
+            <strong>Streak:</strong> 7 days
+        </div>
+        <div class="workout-counter">
+            <strong>Workouts:</strong> 15
+        </div>
+    </div>
+</div>
+
+<style>
+    .calendar {
+        position: absolute;
+        top: 5;
+        left: 5;
+        display: flex;
+        padding: 10px;
+        background-color: white; /* Optional: adds a background color */
+        border: 1px solid #ccc; /* Optional: adds a border for visual distinction */
+        width: fit-content; /* Adjust width based on content */
+    }
+
+
+    .day {
+        padding: 10px;
+        width: 60px;
+        text-align: center;
+        font-weight: bold;
+        margin-right: 5px;
+    }
+
+    .highlight {
+        background-color: lightblue;
+        border-radius: 5px;
+    }
+
+    .counters {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .streak-counter,
+    .workout-counter {
+        margin-bottom: 10px;
+    }
+</style>
