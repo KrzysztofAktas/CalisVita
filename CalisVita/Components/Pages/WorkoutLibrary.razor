@@ -15,7 +15,7 @@
 <h3>Workout Library</h3>
 
 
-@foreach (var Workout in UniqueWorkouts)
+@foreach (var workout in workouts)
 {
     <div class="col">
         <ExercsieItem Workout="Workout"></ExercsieItem>
@@ -33,30 +33,17 @@ else if (!workouts.Any())
 
 @code {
     private IEnumerable<Workout> workouts;
-    
+
+    public Workout Workout;
+
     protected override async Task OnInitializedAsync()
     {
         workouts = await WorkoutProvider.GetAllWorkoutsAsync(); 
     }
+   
     
-    private List<Workout> Workouts = new List<Workout>
-    {
-        new Workout { WorkoutType = "Chest" },
-        new Workout { WorkoutType = "Legs" },
-        new Workout { WorkoutType = "Core" },
-        new Workout { WorkoutType = "Back" },
-        new Workout { WorkoutType = "Shoulders" },
-
-    };
-
-    [Parameter]
-    public Workout Workout { get; set; }
 
 
-
-    private IEnumerable<Workout> UniqueWorkouts => Workouts
-        .GroupBy(w => w.WorkoutType)
-        .Select(g => g.First());
 
     
   

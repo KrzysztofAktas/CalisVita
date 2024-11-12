@@ -8,9 +8,8 @@
 
 
 <div class="row row-cols-1 row-cols-md-3 g-4">
-    @if (UniqueWorkouts != null)
-    {
-        @foreach (var Workout in UniqueWorkouts)
+    
+        @foreach (var workout in workouts)
         {
         <div class="col">
             <div class="card h-100 border-0 shadow-sm mb-4" style="max-width: 28rem; border-radius: 10px;">
@@ -24,30 +23,22 @@
                 </div>
             </div>
         </div>
-        }
+        
    }
 </div>
 
 @code {
 
-    private List<Workout> Workouts = new List<Workout>
-    {
-        new Workout { WorkoutType = "Chest" },
-        new Workout { WorkoutType = "Legs" },
-        new Workout { WorkoutType = "Core" },
-        new Workout { WorkoutType = "Back" },
-        new Workout { WorkoutType = "Shoulders" },
-        
-    };
+    private IEnumerable<string> workouts;
 
-    [Parameter]
     public Workout Workout { get; set; }
 
 
-
-    private IEnumerable<Workout> UniqueWorkouts => Workouts
-        .GroupBy(w => w.WorkoutType)
-        .Select(g => g.First());
+    protected override async Task OnInitializedAsync()
+    {
+        workouts = await WorkoutProvider.GetWorkoutTypesAsync();
+    }
+    
 
    
 
