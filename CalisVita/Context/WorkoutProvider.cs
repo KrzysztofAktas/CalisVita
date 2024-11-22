@@ -39,6 +39,13 @@ namespace CalisVita.Context
                                  .ToListAsync();
         }
 
+        public async Task<int> GetTotalWorkoutsCompletedAsync(int userId)
+        {
+            return await _context.UserWorkoutLogs
+                                 .Where(log => log.Id == userId)
+                                 .CountAsync();
+        }
+
 
     }
 }
