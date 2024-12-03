@@ -14,6 +14,24 @@
 <StatusMessage Message="@statusMessage" IsError="@isError" />
 
 <style>
+    .page-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 80vh;
+        margin: 0;
+    }
+
+    /* Welcome sign styling */
+    .welcome-sign {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 700;
+        color: #34495e;
+        margin-bottom: 1rem;
+    }
+
     /* Card styling */
     .card {
         max-width: 500px;
@@ -114,32 +132,33 @@
         opacity: 0.15;
     }
 </style>
-
-<div class="card border-secondary  ">
-    <div class="decorative-circle"></div> <!-- Decorative circle -->
-    <div class="card-body">
-        <h4 class="card-title">Login to CalisVita</h4>
-        <EditForm OnValidSubmit="LoginUser" Model="Model" FormName="loginForm">
-            <div class="row g-3">
-                <div class="col-md-12">
-                    <label for="email" class="form-label">Email</label>
-                    <InputText @bind-Value="Model.Email" class="form-control" placeholder="name@example.com" />
+<div class="page-container">
+    <div class="welcome-sign">Welcome back to CalisVita!</div>
+    <div class="card border-secondary  ">
+        <div class="decorative-circle"></div> <!-- Decorative circle -->
+        <div class="card-body">
+            <h4 class="card-title">Login to CalisVita</h4>
+            <EditForm OnValidSubmit="LoginUser" Model="Model" FormName="loginForm">
+                <div class="row g-3">
+                   <div class="col-md-12">
+                      <label for="email" class="form-label">Email</label>
+                      <InputText @bind-Value="Model.Email" class="form-control" placeholder="name@example.com" />
+                   </div>
+                    <div class="col-md-6">
+                        <label for="password" class="form-label">Password</label>
+                        <InputText type="password" @bind-Value="Model.Password" class="form-control" placeholder="Password" />
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <label for="password" class="form-label">Password</label>
-                    <InputText type="password" @bind-Value="Model.Password" class="form-control" placeholder="Password" />
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
                 </div>
-            </div>
-            <div class="action-buttons">
-                <button type="submit" class="btn btn-primary w-100">Login</button>
-            </div>
-        </EditForm>
-    </div>
-    <div class="card-footer">
-        Dont have an account? <a href="@(NavigationManager.ToAbsoluteUri("Account/Register"))">Register</a>
+            </EditForm>
+        </div>
+        <div class="card-footer">
+         Dont have an account? <a href="@(NavigationManager.ToAbsoluteUri("Account/Register"))">Register</a>
+        </div>
     </div>
 </div>
-
 @code {
     private string? statusMessage;
     private bool isError;
