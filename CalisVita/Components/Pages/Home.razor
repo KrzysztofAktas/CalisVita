@@ -12,17 +12,15 @@
 <PageTitle>Home</PageTitle>
 
 
+<div class="card">
+  <div class="card-body">
 
+  </div>
+</div>
 
-
-@code
+    @code
 {
-    private IEnumerable<Workout> workouts;
-
-    protected override async Task OnInitializedAsync()
-    {
-        workouts = await WorkoutProvider.GetAllWorkoutsAsync();
-    }
+    
 
     // Get the current day of the week (0 = Sunday, 6 = Saturday)
     string[] daysOfWeek = new[] {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
