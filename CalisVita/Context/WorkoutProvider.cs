@@ -39,12 +39,41 @@ namespace CalisVita.Context
                                  .ToListAsync();
         }
 
-        public async Task<int> GetTotalWorkoutsCompletedAsync(int userId)
+        public async Task<int> GetTotalWorkoutsCompletedAsync(string userId)
         {
             return await _context.UserWorkoutLogs
-                                 .Where(log => log.Id == userId)
+                                 .Where(log => log.User.Id == userId)
                                  .CountAsync();
         }
+
+        public async Task<int> GetWorkoutStreakAsync(string userId)
+        {
+            var logs = await _context.UserWorkoutLogs
+                                      .Where(log => log.User.Id == userId)
+                                      .OrderByDescending(log => log.LogDate)
+                                      .ToListAsync();
+
+            if (!logs.Any()) return 0;
+
+            int streak = 0;
+            DateTime currentDate = DateTime.Now.Date;
+
+            foreach (var log in logs)
+            {
+                if (log.LogDate.Date == currentDate)
+                {
+                    streak++;
+                    currentDate = currentDate.AddDays(-1); // Check the previous day
+                }
+                else if (log.LogDate.Date < currentDate)
+                {
+                    break;
+                }
+            }
+
+            return streak;
+        }
+
 
 
     }
