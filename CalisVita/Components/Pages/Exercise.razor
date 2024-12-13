@@ -1,0 +1,40 @@
+﻿@using CalisVita.Components.Shared
+@using CalisVita.Context
+@using CalisVita.Model
+@inject DatabaseContext DbContext
+@inject WorkoutProvider WorkoutProvider
+
+@page "/exercise/{Id:int}"
+
+
+<div style="display: flex; justify-content: center; align-items: center; height: 50vh; background-color: #ffffff; font-family: 'Arial', sans-serif;">
+    <div style="border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; max-width: 360px; width: 90%; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); background-color: #ffffff;">
+        <h3 style="font-size: 24px; margin-bottom: 12px; color: #333; text-align: left;">
+            @oneWorkout.WorkoutName
+        </h3>
+        <p style="font-size: 16px; line-height: 1.6; margin-bottom: 16px; color: #555; text-align: left;">
+            @oneWorkout.WorkoutInfo
+        </p>
+        <p style="font-size: 14px; font-weight: bold; color: #007BFF; text-align: left; margin: 0;">
+            Difficulty: @oneWorkout.WorkoutLevel
+        </p>
+    </div>
+</div>
+
+
+
+
+@code
+{
+    [Parameter]
+    public int Id { get; set; }
+
+    private Workout oneWorkout;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // workouts = await WorkoutProvider.GetAllWorkoutsAsync();
+        oneWorkout = await WorkoutProvider.GetWorkoutByIdAsync(Id);
+        StateHasChanged();
+    }
+}

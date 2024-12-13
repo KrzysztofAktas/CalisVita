@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CalisVita.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20241017080634_InitialCreate")]
+    [Migration("20241212092637_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

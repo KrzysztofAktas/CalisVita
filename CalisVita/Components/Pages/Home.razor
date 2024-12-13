@@ -16,35 +16,15 @@
 
 
     @code
-
-{
-    private WorkoutStatsViewModel workoutStats;
-    private string userId;
-
-    protected override async Task OnInitializedAsync()
     {
-        // Get the current user
-        var user = await UserProvider.GetUserByIdAsync(userId);
-        if (user == null)
-        {
-            NavigationManager.NavigateTo("/login");
-            return;
-        }
+    //Get the current day of the week(0 = Sunday, 6 = Saturday)//
+    string[] daysOfWeek = new[] { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+    int currentDayIndex = (int)DateTime.Now.DayOfWeek;
 
-        userId = user.Id; 
-
-        
-        workoutStats = new WorkoutStatsViewModel
-            {
-                TotalWorkouts = await WorkoutProvider.GetTotalWorkoutsCompletedAsync(userId),
-                WorkoutStreak = await WorkoutProvider.GetWorkoutStreakAsync(userId)
-            };
+   
     }
 
 
- // Get the current day of the week (0 = Sunday, 6 = Saturday)
-    string[] daysOfWeek = new[] {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
-    int currentDayIndex = (int)DateTime.Now.DayOfWeek;
 
 
 }<div class="calendar">
@@ -57,23 +37,8 @@
 </div>
 
 
-@if (workoutStats == null)
-{
-    <p>Loading...</p>
-}
-else
-{
-    <div class="stats-container">
-        <div class="stat-card">
-            <h3> Workout Streak</h3>
-            <p>@workoutStats.WorkoutStreak days</p>
-        </div>
-        <div class="stat-card">
-            <h3> Total Workouts</h3>
-            <p>@workoutStats.TotalWorkouts completed</p>
-        </div>
-    </div>
-}
+
+
 
 
 

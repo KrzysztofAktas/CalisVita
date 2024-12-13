@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Components\Shared\Back - Copy.razor" />
     <Content Remove="Components\Shared\WorkoutStats.razor" />
   </ItemGroup>
 

@@ -14,9 +14,9 @@ namespace CalisVita.Context
             return await _context.Workouts.OrderBy(workout => workout.WorkoutName).ToListAsync();
         }
 
-         public Workout? GetWorkout(int id)
+         public async Task<Workout> GetWorkoutByIdAsync(int id)
         {
-            return _context.Workouts.Find(id);
+            return await _context.Workouts.FirstOrDefaultAsync(c => c.id == id);
         }
 
         public async Task AddWorkoutAsync(Workout workout)
@@ -73,6 +73,17 @@ namespace CalisVita.Context
 
             return streak;
         }
+
+        public async Task<List<Workout>> GetWorkoutsByTypeAsync(string workoutType)
+        {
+            using (var context = _context)
+            {
+                return await context.Workouts
+                    .Where(w => w.WorkoutType == workoutType)
+                    .ToListAsync();
+            }
+        }
+
 
 
 

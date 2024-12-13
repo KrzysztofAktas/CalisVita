@@ -8,7 +8,7 @@ namespace CalisVita.Model
     public class Workout
     {
         
-        public int Id { get; set; }
+        public int id { get; set; }
 
         [Required]
         [MaxLength(100)]

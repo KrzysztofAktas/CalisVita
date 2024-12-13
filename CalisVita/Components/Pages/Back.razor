@@ -1,0 +1,95 @@
+﻿@using CalisVita.Components.Shared
+@using CalisVita.Context
+@using CalisVita.Model
+@inject DatabaseContext DbContext
+@inject WorkoutProvider WorkoutProdvider
+@inject WorkoutProvider WorkoutProvider
+@inject NavigationManager NavigationManager
+@page "/Back"
+
+
+<h3>Exercises for @WorkoutType</h3>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .card {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+    .card-content {
+        padding: 15px;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        margin: 0 0 10px;
+        color: #333;
+    }
+
+    .card-description {
+        font-size: 1rem;
+        color: #666;
+        margin: 0;
+    }
+</style>
+<div class="card-container">
+    @if (FilteredWorkouts != null)
+    {
+        @foreach (var workout in FilteredWorkouts)
+        {
+
+            <div class="card">
+                <div class="card-content">
+                    <h2 class="card-title">@workout.WorkoutName</h2>
+                    <p class="card-description">Difficulty: @workout.WorkoutLevel</p>
+                    <button class="btn btn-outline-secondary" @onclick="() => ShowInfo(workout)">Info</button>
+                </div>
+            </div>
+
+        }
+    }
+</div>
+@code {
+    private string WorkoutType = "Back";
+    private List<Workout> FilteredWorkouts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        FilteredWorkouts = await WorkoutProvider.GetWorkoutsByTypeAsync(WorkoutType);
+    }
+
+    private void ShowInfo(Workout workout)
+    {
+        NavigationManager.NavigateTo($"/exercise/{workout.id}");
+        StateHasChanged();
+    }
+}

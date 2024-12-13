@@ -14,13 +14,104 @@
 
 <h3>Workout Library</h3>
 
-
-@foreach (var workout in workouts)
-{
-    <div class="col">
-        <ExercsieItem Workout="Workout"></ExercsieItem>
+<div class="card-container">
+    <!-- Back Card -->
+    <div class="card">
+        <div class="card-content">
+            <h2 class="card-title">Back</h2>
+            <p class="card-description">Strengthen and tone your back with these effective exercises.</p>
+            <a href="/Back" class="btn btn-outline-secondary">Button</a>
+        </div>
     </div>
-}
+
+    <!-- Shoulders Card -->
+    <div class="card">
+        <div class="card-content">
+            <h2 class="card-title">Shoulders</h2>
+            <p class="card-description">Build stronger shoulders with targeted workouts.</p>
+            <a href="/Shoulders" class="btn btn-outline-secondary">Button</a>
+        </div>
+    </div>
+
+    <!-- Core Card -->
+    <div class="card">
+        <div class="card-content">
+            <h2 class="card-title">Core</h2>
+            <p class="card-description">Improve core strength and stability with these exercises.</p>
+            <a href="/Core" class="btn btn-outline-secondary">Button</a>
+        </div>
+    </div>
+
+    <!-- Legs Card -->
+    <div class="card">
+        <div class="card-content">
+            <h2 class="card-title">Legs</h2>
+            <p class="card-description">Enhance your leg strength and endurance with these routines.</p>
+            <a href="/Legs" class="btn btn-outline-secondary">Button</a>
+        </div>
+    </div>
+
+    <!-- Chest Card -->
+    <div class="card">
+        <div class="card-content">
+            <h2 class="card-title">Chest</h2>
+            <p class="card-description">Target your chest muscles with these effective workouts.</p>
+            <a href="/Chest" class="btn btn-outline-secondary">Button</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .card {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+    .card-content {
+        padding: 15px;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        margin: 0 0 10px;
+        color: #333;
+    }
+
+    .card-description {
+        font-size: 1rem;
+        color: #666;
+        margin: 0;
+    }
+</style>
 
 @if (workouts is null)
 {
