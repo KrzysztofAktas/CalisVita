@@ -45,6 +45,23 @@ namespace CalisVita.Context
             await _userManager.RemoveFromRoleAsync(user, "Admin");
         }
 
-        
+        public async Task<string> GetUserLevelAsync(string userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null) return null;
+
+            return ConvertWorkoutLevelToString(user.WorkoutLevel);
+        }
+
+        private string ConvertWorkoutLevelToString(int workoutLevel)
+        {
+            return workoutLevel switch
+            {
+                1 => "Beginner",
+                2 => "Intermediate",
+                3 => "Advanced",
+                _ => "Unknown" // Default case
+            };
+        }
     }
 }

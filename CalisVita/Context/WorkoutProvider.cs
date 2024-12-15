@@ -84,6 +84,41 @@ namespace CalisVita.Context
             }
         }
 
+        private static readonly Dictionary<DayOfWeek, string> DailyWorkoutTypes = new()
+{
+    { DayOfWeek.Monday, "Shoulders" },
+    { DayOfWeek.Tuesday, "Core" },
+    { DayOfWeek.Wednesday, "Chest" },
+    { DayOfWeek.Thursday, "Back" },
+    { DayOfWeek.Friday, "Legs" },
+};
+
+        public string GetWorkoutTypeForToday()
+        {
+            return DailyWorkoutTypes[DateTime.Today.DayOfWeek];
+        }
+
+        public async Task<Workout> GetDailyWorkoutAsync(string workoutType, string userLevel)
+        {
+            int level = ConvertUserLevelToInt(userLevel);
+            return await _context.Workouts
+                .Where(w => w.WorkoutType == workoutType && w.WorkoutLevel == level)
+                .OrderBy(w => Guid.NewGuid()) // Randomly select a workout
+                .FirstOrDefaultAsync();
+        }
+
+        private int ConvertUserLevelToInt(string userLevel)
+        {
+            return userLevel switch
+            {
+                "Beginner" => 1,
+                "Intermediate" => 2,
+                "Advanced" => 3,
+                _ => 1 // Default to Beginner
+            };
+        }
+
+
 
 
 

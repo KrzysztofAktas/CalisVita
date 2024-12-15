@@ -1,10 +1,12 @@
 ﻿@using CalisVita.Components.Shared
 @using CalisVita.Context
 @using CalisVita.Model
+@using Microsoft.AspNetCore.Components.Authorization
 @inject DatabaseContext DbContext
 @inject NavigationManager NavigationManager
 @inject WorkoutProvider WorkoutProvider
 @inject UserProvider UserProvider
+@inject AuthenticationStateProvider AuthStateProvider
 
 @page "/"
 
@@ -22,6 +24,27 @@
     //Get the current day of the week(0 = Sunday, 6 = Saturday)//
     string[] daysOfWeek = new[] { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
     int currentDayIndex = (int)DateTime.Now.DayOfWeek;
+
+    @* private Workout dailyWorkout; *@
+
+    @* protected override async Task OnInitializedAsync() *@
+    @* { *@
+    @*     var authState = await AuthStateProvider.GetAuthenticationStateAsync(); *@
+    @*     var user = authState.User; *@
+
+    @*     if (user.Identity.IsAuthenticated) *@
+    @*     { *@
+    @*         var userId = user.FindFirst("sub")?.Value; *@
+    @*         var userLevel = await UserProvider.GetUserLevelAsync(userId); *@
+    @*         var workoutType = WorkoutProvider.GetWorkoutTypeForToday(); *@
+    @*         dailyWorkout = await WorkoutProvider.GetDailyWorkoutAsync(workoutType, userLevel); *@
+    @*     } *@
+    @* } *@
+
+    @* private void StartWorkout() *@
+    @* { *@
+    @*     *@
+    @* } *@
     }
 
 
@@ -38,7 +61,9 @@
 
 
 
-
+@* <h3>Today's Workout: @dailyWorkout?.WorkoutName</h3> *@
+@* <p>Difficulty: @dailyWorkout?.WorkoutLevel</p> *@
+@* <button @onclick="StartWorkout">Start Workout</button> *@
 
 
 
