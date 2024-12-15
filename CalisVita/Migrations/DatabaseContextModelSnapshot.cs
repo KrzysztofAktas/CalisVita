@@ -100,21 +100,21 @@ namespace CalisVita.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("WorkoutId")
+                    b.Property<int>("Workoutid")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("WorkoutId");
+                    b.HasIndex("Workoutid");
 
                     b.ToTable("UserWorkoutLogs");
                 });
 
             modelBuilder.Entity("CalisVita.Model.Workout", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -136,7 +136,7 @@ namespace CalisVita.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.ToTable("Workouts");
                 });
@@ -279,7 +279,7 @@ namespace CalisVita.Migrations
 
                     b.HasOne("CalisVita.Model.Workout", "Workout")
                         .WithMany("UserWorkoutLogs")
-                        .HasForeignKey("WorkoutId")
+                        .HasForeignKey("Workoutid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

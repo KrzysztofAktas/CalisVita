@@ -15,19 +15,19 @@
 
 
 
+
+
     @code
     {
     //Get the current day of the week(0 = Sunday, 6 = Saturday)//
     string[] daysOfWeek = new[] { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
     int currentDayIndex = (int)DateTime.Now.DayOfWeek;
-
-   
     }
 
 
 
 
-}<div class="calendar">
+<div class="calendar">
     @for (int i = 0; i < daysOfWeek.Length; i++)
     {
         <div class="day @(i == currentDayIndex ? "highlight" : "")">
