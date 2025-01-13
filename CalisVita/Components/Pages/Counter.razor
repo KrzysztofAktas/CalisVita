@@ -1,0 +1,94 @@
+﻿@page "/counter"
+@using CalisVita.Data
+@using CalisVita.Context
+@using CalisVita.Model
+@using Microsoft.AspNetCore.Components.Authorization
+@inject NavigationManager NavigationManager
+@inject UserWorkoutLogProvider WorkoutLogProvider
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<h1>Cycle @CurrentCycle of 3</h1>
+
+<p>Start in a high plank position. Lower your chest to the floor, then push back up, keeping your body in a straight line from your head to your feet.</p>
+
+<p>Counter: @CounterValue</p>
+<button @onclick="IncrementCounter" disabled="@IsCounterAtMax">Increase Counter</button>
+<button @onclick="SubmitCounter" disabled="@IsSubmitDisabled">Submit</button>
+
+@code {
+    private int _counterValue = 0;  // Private backing field for the counter
+    private int CounterValue
+    {
+        get => _counterValue;
+        set
+        {
+            if (_counterValue != value)
+            {
+                _counterValue = value;
+                StateHasChanged();  // Notify Blazor to re-render
+            }
+        }
+    }
+
+    private int CurrentCycle { get; set; } = 1;
+    private int TimeRemaining { get; set; } = 60;
+    private string? CurrentUserId;
+    private bool IsCounterAtMax => CounterValue >= 100;
+    private bool IsSubmitDisabled => TimeRemaining <= 0 || CounterValue == 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        CurrentUserId = authState.User?.FindFirst(c => c.Type == "sub")?.Value;
+
+        await StartTimerAsync();
+    }
+
+    private async Task StartTimerAsync()
+    {
+        while (TimeRemaining > 0)
+        {
+            await Task.Delay(1000);
+            TimeRemaining--;
+            StateHasChanged();
+        }
+    }
+
+    private void IncrementCounter()
+    {
+        if (CounterValue < 100)
+        {
+            CounterValue++;
+        }
+    }
+
+    private async Task SubmitCounter()
+    {
+        if (!string.IsNullOrEmpty(CurrentUserId))
+        {
+
+            {
+                // Create and save a workout log for this cycle
+                var log = new UserWorkoutLog
+                    {
+                        LogDate = DateTime.Now,
+                        Reps = CounterValue,
+                    };
+
+                await WorkoutLogProvider.AddUserWorkoutLogAsync(log);
+            }
+        }
+
+        if (CurrentCycle < 3)
+        {
+            CurrentCycle++;
+            CounterValue = 0;
+            TimeRemaining = 60;
+            await StartTimerAsync();
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/");
+        }
+    }
+}

@@ -15,7 +15,13 @@
 <PageTitle>Home</PageTitle>
 
 
-
+<div class="card w-50">
+    <div class="card-body">
+        <h5 class="card-title"> Push Ups</h5>
+        <p class="card-text">Difficulty: 3</p>
+        <button @onclick="NavigateToCounterPage">Start Cycle</button>
+    </div>
+</div>
 
 
 
@@ -25,45 +31,20 @@
     string[] daysOfWeek = new[] { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
     int currentDayIndex = (int)DateTime.Now.DayOfWeek;
 
-    @* private Workout dailyWorkout; *@
-
-    @* protected override async Task OnInitializedAsync() *@
-    @* { *@
-    @*     var authState = await AuthStateProvider.GetAuthenticationStateAsync(); *@
-    @*     var user = authState.User; *@
-
-    @*     if (user.Identity.IsAuthenticated) *@
-    @*     { *@
-    @*         var userId = user.FindFirst("sub")?.Value; *@
-    @*         var userLevel = await UserProvider.GetUserLevelAsync(userId); *@
-    @*         var workoutType = WorkoutProvider.GetWorkoutTypeForToday(); *@
-    @*         dailyWorkout = await WorkoutProvider.GetDailyWorkoutAsync(workoutType, userLevel); *@
-    @*     } *@
-    @* } *@
-
-    @* private void StartWorkout() *@
-    @* { *@
-    @*     *@
-    @* } *@
-    }
-
-
-
-
-<div class="calendar">
-    @for (int i = 0; i < daysOfWeek.Length; i++)
+    private void NavigateToCounterPage()
     {
-        <div class="day @(i == currentDayIndex ? "highlight" : "")">
-            @daysOfWeek[i]
-        </div>
+        NavigationManager.NavigateTo("/counter");
     }
-</div>
+
+    }
 
 
 
-@* <h3>Today's Workout: @dailyWorkout?.WorkoutName</h3> *@
-@* <p>Difficulty: @dailyWorkout?.WorkoutLevel</p> *@
-@* <button @onclick="StartWorkout">Start Workout</button> *@
+
+
+
+
+
 
 
 

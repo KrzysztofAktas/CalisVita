@@ -1,6 +1,7 @@
 using CalisVita.Components;
 using CalisVita.Components.Account;
 using CalisVita.Context;
+using CalisVita.Data;
 using CalisVita.Model;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -17,7 +18,9 @@ builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 builder.Services.AddScoped<WorkoutProvider>();
 builder.Services.AddScoped<UserProvider>();
- 
+builder.Services.AddScoped<UserWorkoutLogProvider>();
+
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = IdentityConstants.ApplicationScheme;
